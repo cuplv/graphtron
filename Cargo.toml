@@ -1,0 +1,16 @@
+[package]
+name = "ICEdit"
+version = "0.2.0"
+authors = []
+
+[[bin]]
+name = "graphtron"
+
+[dependencies]
+time = "0.1"
+rand = "0.3"
+clap = "1"
+piston = "0.15.1"
+piston2d-graphics = "0.11.0"
+piston2d-opengl_graphics = "0.19.0"
+pistoncore-glutin_window = "0.17.1"
