@@ -1,5 +1,3 @@
-#![feature(zero_one)]
-
 // Default parameters
 // ------------------
 
