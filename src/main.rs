@@ -14,11 +14,11 @@ const DEFAULT_HEIGHT: u32 = 800;
 
 // icedit test
 //see main() for full testing options
-const TEST_WIDTH: u32 = 800;
-const TEST_HEIGHT: u32 = 800;
-const DEFAULT_RND_START: u32 = 100;
-const DEFAULT_RND_CMDS: u32 = 10;
-const DEFAULT_OUTFILE: Option<&'static str> = Some("testout.csv");
+//const TEST_WIDTH: u32 = 800;
+//const TEST_HEIGHT: u32 = 800;
+//const DEFAULT_RND_START: u32 = 100;
+//const DEFAULT_RND_CMDS: u32 = 10;
+//const DEFAULT_OUTFILE: Option<&'static str> = Some("testout.csv");
 const OPEN_GL: OpenGL = OpenGL::V3_2;
 
 extern crate time;
@@ -30,16 +30,20 @@ extern crate graphics;
 extern crate opengl_graphics;
 extern crate piston;
 
-use std::env::current_exe;
-use std::fs::OpenOptions;
-use std::io::prelude::*;
-use time::Duration;
+#[macro_use]
+extern crate adapton;
+
+//use std::env::current_exe;
+//use std::fs::OpenOptions;
+//use std::io::prelude::*;
+//use time::Duration;
 use glutin_window::GlutinWindow;
-use graphics::Transformed;
+//use graphics::Transformed;
 use opengl_graphics::{GlGraphics, OpenGL};
-use opengl_graphics::glyph_cache::GlyphCache;
+//use opengl_graphics::glyph_cache::GlyphCache;
 use piston::event_loop::{Events, EventLoop};
-use piston::input::{Button, Event, Input, Key};
+//use piston::input::{Button, Event, Input, Key};
+use piston::input::{Event};
 use piston::window::WindowSettings;
 
 // fn render(c: graphics::context::Context, g: &mut GlGraphics, f: &mut GlyphCache, t: &List<String>, time: Duration, s: &Inputstatus) {
@@ -186,16 +190,33 @@ fn main() {
   // graphics
   let window = try_create_window(x, y).unwrap();
   let mut gl = GlGraphics::new(OPEN_GL);
-  let exe_directory = current_exe().unwrap().parent().unwrap().to_owned();
-  let mut font = GlyphCache::new(&exe_directory.join("../../FiraMono-Bold.ttf")).unwrap();
+  //let exe_directory = current_exe().unwrap().parent().unwrap().to_owned();
+  //let mut font = GlyphCache::new(&exe_directory.join("../../FiraMono-Bold.ttf")).unwrap();
     
   // input
-  let mut command_key_down = false;
+//  let mut command_key_down = false;
   //let mut status = Inputstatus::Insert(Dir::R, show_curs);
 
   for e in window.events().max_fps(60).ups(50) {
     match e {
-      _ => println!("{:?}", e)
+      Event::Update(_) => { },
+      Event::Idle(_) => { },
+      Event::AfterRender(_) => { },
+      Event::Render(args) => {
+        gl.draw(args.viewport(), |c, g|{
+          let node_color  = [1.0,0.0,1.0,1.0];  
+          let node_geom   = [100.0,100.0,10.0,10.0];
+          graphics::clear([0.05, 0.05, 0.05, 1.0], g);
+          graphics::rectangle(node_color, node_geom, c.transform, g);
+
+          let node_geom   = [110.0,110.0,10.0,10.0];
+          graphics::rectangle(node_color, node_geom, c.transform, g);
+          
+          let node_geom   = [90.0,110.0,10.0,10.0];
+          graphics::rectangle(node_color, node_geom, c.transform, g);
+        });  
+      },
+      _ => println!("{:?}", e),      
     }
   }
 }
